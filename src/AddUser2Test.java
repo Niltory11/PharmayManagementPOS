@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AddUser2Test {
 
-    @Test
+    @Test // Assert
     public void testValidateField() {
 
         AddUser2 addUser = new AddUser2();
@@ -19,7 +19,7 @@ public class AddUser2Test {
         // Act
         boolean result = addUser.jButton1ActionPerformed (dob, mobileNumber, username1, password, address);
 
-        // Assert
+        
       assertTrue(result, "All fields are valid, so validateFields should return true."); //True
       //  assertFalse(result,"All fields are valid, so validateFields should return true."); //False
       //  assertNotNull(result,"you know it is not null");                                  //Not Null
@@ -27,6 +27,8 @@ public class AddUser2Test {
       //  assertNotEquals(username1, username2, "Usernames should not be equal!!!");         //Not Equal
      //  assertNotEquals(username2,username1,"Bro they should not be same");            //Equal
      //   assertEquals(address2,address,"Bro they could be same");////Equal
+     assertSame(address,address2,"IF both are same");//Same
+     assertNotSame(username1,address2,"IF both are not same");// NOt Same
 
 
     }
@@ -93,7 +95,7 @@ public class AddUser2Test {
         }
     }
 
-
+    
 
 
 
