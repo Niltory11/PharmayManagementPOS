@@ -16,17 +16,6 @@ import java.util.Date;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 /**
  *
  * @author ahsan
@@ -365,33 +354,37 @@ public class AddUser2 extends javax.swing.JFrame {
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtUsername;
 
-    public boolean jButton1ActionPerformed(String dob, String mobileNumber, String username, String password, String address) {
+    public boolean jButton1ActionPerformed(String dob, String mobileNumber, String username, String password, String address) throws IllegalArgumentException {
         // Validate fields
+
+        try {    // Simulate a delay (e.g., database query or network call)
+            Thread.sleep(1000); // Simulate a 1-second delay
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         if (dob.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Date of Birth field is required.");
-            return false; // Return false if validation fails
+            throw new IllegalArgumentException("Date of Birth field is required.");
         } else if (mobileNumber.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Mobile Number field is required.");
-            return false;
+            throw new IllegalArgumentException("Mobile Number field is required.");
         } else if (!mobileNumber.matches(mobileNumberPattern) || mobileNumber.length() != 11) {
-            JOptionPane.showMessageDialog(null, "Mobile Number field is invalid.");
-            return false;
+            throw new IllegalArgumentException("Mobile Number field is invalid.");
         } else if (username.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Username field is required.");
-            return false;
+            throw new IllegalArgumentException("Username field is required.");
         } else if (checkUsername == 1) {
-            JOptionPane.showMessageDialog(null, "Username already exists.");
-            return false;
+            throw new IllegalArgumentException("Username already exists.");
         } else if (password.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Password field is required.");
-            return false;
+            throw new IllegalArgumentException("Password field is required.");
         } else if (address.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Address field is required.");
-            return false;
+            throw new IllegalArgumentException("Address field is required.");
         } else {
             // If all fields are valid, return true
             return true;
         }
+
+
+
+
     }
     // End of variables declaration//GEN-END:variables
 }
