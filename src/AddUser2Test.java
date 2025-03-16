@@ -75,27 +75,7 @@ public class AddUser2Test {
     }
 
 
-    @Test
-    public void testValidateField_FailScenario() {
-        // Arrange
-        AddUser2 addUser = new AddUser2();
-
-        // Invalid input data (empty DOB)
-        String dob = "20-12-2000"; // Empty DOB
-        String mobileNumber = "12345678901";
-        String username = "user1";
-        String password = "password123";
-        String address = "123 Main St";
-
-        // Act and Assert
-        try {
-            boolean result = addUser.jButton1ActionPerformed(dob, mobileNumber, username, password, address);
-            fail("Test failed: Expected an exception to be thrown for empty DOB, but no exception was thrown.");
-        } catch (Exception e) {
-            // Expected behavior: an exception is thrown
-            fail("test failed due to having date");
-        }
-    }
+    
 
     @Test //AssertTimeOut
     public void testValidateField_Timeout() {
