@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 class ViewMedicineTest {
 
@@ -8,52 +10,38 @@ class ViewMedicineTest {
 
     @BeforeEach
     void setUp() {
-        viewMedicine = new ViewMedicine(); // Initialize the ViewMedicine UI
+        viewMedicine = new ViewMedicine();
     }
 
     @AfterEach
     void tearDown() {
-        viewMedicine.dispose(); // Close the UI after each test
+        viewMedicine.dispose();
     }
 
     @Test
-    void testComponentInitialization() {
-        assertNotNull(viewMedicine.jTable1, "Table should be initialized");
-        assertNotNull(viewMedicine.jLabel1, "Label should be initialized");
-        assertNotNull(viewMedicine.jButton1, "Button should be initialized");
-    }
+    void testTableDataWithArrayList() {
+        DefaultTableModel model = (DefaultTableModel) viewMedicine.jTable1.getModel();
 
-    @Test
-    void testInitialComponentValues() {
-        // Debugging output
-        System.out.println("Row Count: " + viewMedicine.jTable1.getRowCount());
-        System.out.println("Label Text: " + viewMedicine.jLabel1.getText());
-        System.out.println("Is Button Enabled? " + viewMedicine.jButton1.isEnabled());
-
-        ArrayList<Boolean> conditions = new ArrayList<>();
-
-        // Assertions to verify UI elements
-        boolean isTableEmpty = (viewMedicine.jTable1.getRowCount() == 0);
-        boolean isTitleCorrect = "STOCK VIEW".equals(viewMedicine.jLabel1.getText().trim());
-        boolean isButtonEnabled = viewMedicine.jButton1.isEnabled();
-
-        conditions.add(isTableEmpty);
-        conditions.add(isTitleCorrect);
-        conditions.add(isButtonEnabled);
-
-        for (Boolean condition : conditions) {
-            assertTrue(condition, "One of the conditions failed!");
-        }
-    }
-
-    @Test
-    void testTableInteraction() {
-        // Simulating adding a row manually (since we can't connect to DB in test)
-        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) viewMedicine.jTable1.getModel();
+        // Adding mock data
         model.addRow(new Object[]{"Paracetamol", "XYZ Pharma", 10, 5.0, 4.0});
+        model.addRow(new Object[]{"Ibuprofen", "ABC Pharma", 15, 8.5, 7.5});
 
-        assertEquals(1, viewMedicine.jTable1.getRowCount(), "Table should have one row after adding manually");
+        // Expected Data in ArrayList format
+        List<List<Object>> expectedData = new ArrayList<>();
+        expectedData.add(List.of("Paracetamol", "XYZ Pharma", 10, 5.0, 4.0));
+        expectedData.add(List.of("Ibuprofen", "ABC Pharma", 15, 8.5, 7.5));
+
+        // Extracting table data into an ArrayList
+        List<List<Object>> actualData = new ArrayList<>();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            List<Object> row = new ArrayList<>();
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                row.add(model.getValueAt(i, j));
+            }
+            actualData.add(row);
+        }
+
+        // Assert that table data matches expected data
+        assertIterableEquals(expectedData, actualData, "Table data does not match expected list!");
     }
-
-
 }
