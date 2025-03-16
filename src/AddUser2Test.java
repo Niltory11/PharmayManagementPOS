@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -96,7 +97,7 @@ public class AddUser2Test {
         }
     }
 
-    @Test
+    @Test //AssertTimeOut
     public void testValidateField_Timeout() {
         // Arrange
         AddUser2 addUser = new AddUser2();
@@ -115,6 +116,19 @@ public class AddUser2Test {
         }, "Test failed: The method took longer than the expected timeout.");
     }
 
+    @Test //assertLineMach...
+    public void testValidateField_assertLinesMatch() {
+        // Arrange
+        AddUser2 addUser = new AddUser2();
+
+        // Example lists to compare
+        List<String> expectedList = List.of("user1", "password123", "123 Main St", "12345678901", "01-01-2000");
+        List<String> actualList = List.of("user1", "password123", "123 Main St", "12345678901", "01-01-2000");
+
+        // Act and Assert
+        // This will pass because both lists contain the same elements (order does not matter)
+        assertLinesMatch(expectedList, actualList, "The lists should match, regardless of order.");
+    }
 
 
 
